@@ -1,0 +1,71 @@
+class Livro {
+    private String titulo;
+    private String autor;
+    private int anoPublicacao;
+
+    // Construtor e getters/setters
+    // ...
+
+    public void exibirInformacoes() {
+        System.out.println("Título: " + titulo);
+        System.out.println("Autor: " + autor);
+        System.out.println("Ano de publicação: " + anoPublicacao);
+    }
+}
+
+class Usuario {
+    private String nome;
+    private List<Livro> livrosEmprestados = new ArrayList<>();
+
+    // Construtor e getters/setters
+    // ...
+
+    public void emprestarLivro(Livro livro) {
+        livrosEmprestados.add(livro);
+    }
+
+    public void devolverLivro(Livro livro) {
+        livrosEmprestados.remove(livro);
+    }
+}
+
+class Biblioteca {
+    private String nome;
+    private List<Livro> livrosDisponiveis = new ArrayList<>();
+    private List<Usuario> usuarios = new ArrayList<>();
+
+    // Construtor e getters/setters
+    // ...
+
+    public void adicionarLivro(Livro livro) {
+        livrosDisponiveis.add(livro);
+    }
+
+    public void removerLivro(Livro livro) {
+        livrosDisponiveis.remove(livro);
+    }
+
+    public void exibirLivrosDisponiveis() {
+        for (Livro livro : livrosDisponiveis) {
+            livro.exibirInformacoes();
+        }
+    }
+
+    public void emprestarLivro(Usuario usuario, Livro livro) {
+        if (livrosDisponiveis.contains(livro)) {
+            livrosDisponiveis.remove(livro);
+            usuario.emprestarLivro(livro);
+        } else {
+            System.out.println("Livro indisponível.");
+        }
+    }
+
+    public void devolverLivro(Usuario usuario, Livro livro) {
+        if (usuario.livrosEmprestados.contains(livro)) {
+            usuario.devolverLivro(livro);
+            livrosDisponiveis.add(livro);
+        } else {
+            System.out.println("Usuário não possui este livro.");
+        }
+    }
+}
